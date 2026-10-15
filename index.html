@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Future Lab — A Story Told by ANDY</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Colour-grade filters are generated into this SVG by engine.js -->
+  <svg id="filters" width="0" height="0" aria-hidden="true" style="position:absolute"></svg>
+
+  <div id="viewport">
+    <div id="stage">
+
+      <!-- Background: two layers that cross-fade between chapters -->
+      <div class="bg" id="bgA"><div class="bg-pan"><img class="bg-base" alt=""><img class="bg-edge" alt=""></div></div>
+      <div class="bg" id="bgB"><div class="bg-pan"><img class="bg-base" alt=""><img class="bg-edge" alt=""></div></div>
+      <div id="bgShade"></div>
+
+      <canvas id="sky" width="1600" height="900"></canvas>
+      <div id="rocks"></div>
+      <canvas id="embers" width="1600" height="900"></canvas>
+
+      <!-- Chapter visuals -->
+      <div id="fx"></div>
+
+      <!-- Narrator -->
+      <div id="andy">
+        <div class="andy-beam"></div>
+        <img src="assets/andy.png" alt="ANDY, the Future Lab narrator">
+        <div class="andy-pad"><span></span><span></span><span></span></div>
+      </div>
+
+      <!-- Dialogue -->
+      <div id="dialogue" aria-live="polite">
+        <div class="dlg-tag"><span class="dot"></span>ANDY <em>// NARRATOR</em></div>
+        <div class="dlg-chapter" id="dlgChapter"></div>
+        <p id="dlgText"></p>
+        <div class="dlg-foot">
+          <div id="lineDots"></div>
+          <div class="dlg-nav">
+            <button id="btnBack" title="Previous line (←)">◀</button>
+            <button id="btnNext" title="Next line (Space / →)">NEXT ▶</button>
+          </div>
+        </div>
+        <div class="dlg-caret">▼</div>
+      </div>
+
+      <!-- HUD -->
+      <div id="hud">
+        <div class="hud-brand"><b>FUTURE LAB</b><span>// STORY MODE</span></div>
+        <div id="chapterBar"></div>
+        <div class="hud-btns">
+          <button id="btnAuto"  title="Auto-play (A)">AUTO</button>
+          <button id="btnVoice" title="Spoken narration (V)">VOICE</button>
+          <button id="btnSound" title="Music & effects (M)">SOUND</button>
+          <button id="btnMenu"  title="Chapter select (Esc)">CHAPTERS</button>
+        </div>
+      </div>
+
+      <!-- Chapter title card -->
+      <div id="card">
+        <div class="card-line"></div>
+        <div class="card-num" id="cardNum"></div>
+        <h2 class="card-title" id="cardTitle"></h2>
+        <div class="card-line"></div>
+      </div>
+
+      <!-- Title screen -->
+      <div id="title" class="screen show">
+        <div class="whale">
+          <svg viewBox="0 0 400 160">
+            <defs>
+              <linearGradient id="whaleG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#2b3aa0"/><stop offset="1" stop-color="#121a5c"/>
+              </linearGradient>
+            </defs>
+            <path fill="url(#whaleG)" d="M10 90 C40 40 140 20 230 40 C290 52 330 70 360 60 L395 30 L385 75 L398 115 L360 92 C320 110 260 130 190 128 C110 126 40 120 10 90 Z"/>
+            <path fill="#18226a" d="M170 116 C176 142 150 156 128 150 C146 140 150 126 150 118Z"/>
+            <path class="whale-glow" d="M26 94 C90 72 200 66 340 76"/>
+            <path class="whale-glow amber" d="M40 104 C110 92 220 92 330 86"/>
+            <circle cx="58" cy="80" r="3" fill="#9fe8ff"/>
+          </svg>
+        </div>
+        <div class="title-wrap">
+          <div class="title-kicker">IBM × EDITH COWAN UNIVERSITY</div>
+          <div class="title-logo">
+            <div class="tl-rule"></div>
+            <h1>FUTURE LAB</h1>
+            <div class="tl-rule"></div>
+          </div>
+          <div class="title-sub">A STORY TOLD BY <b>ANDY</b></div>
+          <button id="btnStart" class="big-btn">▶ BEGIN TRANSMISSION</button>
+          <button id="btnTitleChapters" class="ghost-btn">CHAPTER SELECT</button>
+          <div class="title-hint">Click, <kbd>Space</kbd> or <kbd>→</kbd> to continue · <kbd>←</kbd> back · <kbd>A</kbd> auto · <kbd>V</kbd> voice</div>
+        </div>
+      </div>
+
+      <!-- Chapter select -->
+      <div id="menu" class="screen">
+        <div class="menu-panel">
+          <h3>CHAPTER SELECT</h3>
+          <ol id="menuList"></ol>
+          <button id="btnMenuClose" class="ghost-btn">CLOSE</button>
+        </div>
+      </div>
+
+      <!-- End screen -->
+      <div id="end" class="screen">
+        <div class="end-wrap">
+          <div class="title-logo small">
+            <div class="tl-rule"></div>
+            <h1>FUTURE LAB</h1>
+            <div class="tl-rule"></div>
+          </div>
+          <div class="end-tag">LEARNING · INNOVATING · DELIVERING</div>
+          <p class="end-andy"><b>ANDY:</b> <span id="endLine"></span></p>
+          <div class="end-btns">
+            <button id="btnReplay" class="big-btn">↺ PLAY AGAIN</button>
+            <button id="btnEndChapters" class="ghost-btn">CHAPTER SELECT</button>
+          </div>
+          <div class="sources" id="sources"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/story.js"></script>
+  <script src="js/scenes.js"></script>
+  <script src="js/engine.js"></script>
+</body>
+</html>
